@@ -228,7 +228,7 @@ fig.update_layout(
     plot_bgcolor='White',
     paper_bgcolor='White',
     autosize=False,
-    width=1250,
+    width=1300,
     height=650,
     )
 
