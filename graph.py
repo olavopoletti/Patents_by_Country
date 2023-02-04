@@ -238,6 +238,7 @@ fig.show()
 
 # %%
 app = Dash()
+server = app.server
 app.layout = html.Div([
     
     #html.H1('Patents Granted'),
