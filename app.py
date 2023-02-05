@@ -285,7 +285,7 @@ fig.update_layout(
     )
 
 app = Dash()
-image = r'assets/th.jpg'
+server = app.server
 app.layout = html.Div(
     html.Div(
         dcc.Graph(
@@ -319,6 +319,6 @@ app.layout = html.Div(
         },                   
 )
 
-app.run_server(debug=False, use_reloader=False)
+app.run_server(debug=True, use_reloader=False)
 
 
