@@ -1,3 +1,4 @@
+# %%
 # Imports
 import pandas as pd
 import numpy as np
@@ -6,9 +7,14 @@ import pycountry
 from dash import dcc, html, Dash
 import plotly as plt
 
+app = Dash()
+server = app.server
+
+# %%
 # ISO Countries names
 iso2_to_iso3 = {c.alpha_2: c.alpha_3 for c in pycountry.countries}
 
+# %%
 # More readable number formats
 def human_format(num):
     num = float('{:.3g}'.format(num))
@@ -18,6 +24,7 @@ def human_format(num):
         num /= 1000.0
     return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][magnitude])
 
+# %%
 # Load the dataset
 df = pd.read_csv(r'dataset.csv').drop(columns=['Unnamed: 0'])
 df['Year'] = df.Year.astype('str')
@@ -25,6 +32,7 @@ df['Pop_h'] = df.Population.apply(human_format)
 df['Pats_h'] = df.Patents.apply(human_format)
 df['GDP_h'] = df.GDP.apply(human_format)
 
+# %%
 # List years and countries
 years = df.Year.unique().tolist()
 countries = df.Name.unique().tolist()
@@ -37,6 +45,7 @@ fig_dict = {
     'frames': []
 }
 
+# %%
 # Fill layout parameters
 fig_dict['layout']['xaxis'] = {
     'range': [-100, 110000],
@@ -109,6 +118,8 @@ sliders_dict = {
 }
 fig_dict["layout"]["sliders"] = [sliders_dict]
 
+
+# %%
 # Data
 year = '1980'
 data_dict = {
@@ -144,6 +155,7 @@ data_dict = {
 }
 fig_dict["data"].append(data_dict)
 
+# %%
 # Frames
 for year in years:
     df_temp = df[df.Year == year]
@@ -210,9 +222,12 @@ for year in years:
     }
     sliders_dict['steps'].append(slider_step)
 
+
+# %%
 # Create figure object
 fig = go.Figure(fig_dict)
 
+# %%
 # Add countries' flags for the 2021 data
 dft = df[(df.Year == '2021')].sort_values(by='Patents', ascending=False)
 for i, row in dft[0:8].iterrows():
@@ -238,6 +253,7 @@ for i, row in dft[0:8].iterrows():
         )
     )
 
+# %%
 # Basic layout for the graphics
 fig.update_layout(
     title='<b>Patents Granted</b>',
@@ -284,41 +300,31 @@ fig.update_layout(
     )
     )
 
-app = Dash()
-server = app.server
-image_file = r'assets/db.jpg'
-app.layout = html.Div(
-    html.Div(
-        dcc.Graph(
-            figure=fig,
-            style={
-                #"display": "block",
-                "margin-left": '40px',
-                "margin-right": '30px',
-                'margin-top': '40px',
-                'margin-bottom': '40px'
-                }
-            ),
+# %%
+# Show figure
+fig.show()
 
-    ),
+# %%
+
+app.layout = html.Div(
     style={
-        'verticalAlign':'middle',
-        'textAlign': 'center',
-        'width':'100%',
-        'height':'100%',
-        'top':'0px',
-        'left':'0px',
-        'z-index':'1000',
-        'background-image': 'url(assets/db.jpg)',
-        'position':'fixed',
-        'background-size': 'contain',
-        'background-size': 'cover',
-        'background-size': '100%',
-        'background-color': 'rgba(0, 0, 0, 0.55)',
-        'background-blend-mode': 'darken',
-        },                   
+    'verticalAlign':'middle',
+    'textAlign': 'center',
+    'width':'100%',
+    'height':'100%',
+    'top':'0px',
+    'left':'0px',
+    'z-index':'1000',
+    'background-image': 'url(assets/db.jpg)',
+    'position':'fixed',
+    'background-size': 'contain',
+    'background-size': 'cover',
+    'background-size': '100%',
+    'background-color': 'rgba(0, 0, 0, 0.55)',
+    'background-blend-mode': 'darken',
+    },             
 )
 
-app.run_server(debug=False, use_reloader=False)
+app.run_server(debug=False, host='0.0.0.0', port=8080)
 
 
