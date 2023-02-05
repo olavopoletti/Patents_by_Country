@@ -4,3 +4,4 @@ plotly
 pycountry
 dash
 gunicorn
+waitress
