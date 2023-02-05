@@ -6,12 +6,15 @@ import plotly.graph_objects as go
 import pycountry
 from dash import dcc, html, Dash
 import plotly as plt
+import os
 
 # %%
 app = Dash(__name__)
 server = app.server
 
-html.Img(src=app.get_asset_url('db.jpg'))
+for f in os.listdir(r'assets'):
+        html.Img(src=app.get_asset_url(f'{f}'))
+        
 app.layout = html.Div(
         children=[
                 html.Div(
