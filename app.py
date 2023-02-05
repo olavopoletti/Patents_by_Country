@@ -308,7 +308,7 @@ app.layout = html.Div(
         children=[
                 html.Div(
                         dcc.Graph(
-                        #figure=fig,
+                        figure=fig,
                         style={
                                 #"display": "block",
                                 "margin-left": '40px',
