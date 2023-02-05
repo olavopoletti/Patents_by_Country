@@ -10,9 +10,11 @@ import plotly as plt
 # %%
 app = Dash(__name__)
 server = app.server
+
+html.Img(src=app.get_asset_url('db.jpg'))
 app.layout = html.Div(
         children=[
-        html.Img(src=app.get_asset_url('db.jpg'))
+        
         ],
         style={
         'verticalAlign':'middle',
