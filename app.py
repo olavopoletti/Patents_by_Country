@@ -286,6 +286,7 @@ fig.update_layout(
 
 app = Dash()
 server = app.server
+image_file = r'assets/db.jpg'
 app.layout = html.Div(
     html.Div(
         dcc.Graph(
@@ -300,7 +301,6 @@ app.layout = html.Div(
             ),
 
     ),
-    className='row',
     style={
         'verticalAlign':'middle',
         'textAlign': 'center',
@@ -319,6 +319,6 @@ app.layout = html.Div(
         },                   
 )
 
-app.run_server(debug=True, use_reloader=False)
+app.run_server(debug=False, use_reloader=False)
 
 
