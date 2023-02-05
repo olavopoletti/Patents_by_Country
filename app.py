@@ -14,7 +14,18 @@ server = app.server
 html.Img(src=app.get_asset_url('db.jpg'))
 app.layout = html.Div(
         children=[
-        
+                html.Div(
+                        dcc.Graph(
+                        #figure=fig,
+                        style={
+                                #"display": "block",
+                                "margin-left": '40px',
+                                "margin-right": '30px',
+                                'margin-top': '40px',
+                                'margin-bottom': '40px'
+                                }
+                        )
+        )
         ],
         style={
         'verticalAlign':'middle',
@@ -36,6 +47,6 @@ app.layout = html.Div(
 
 if __name__ == "__main__":
     from waitress import serve
-    serve(app)
+    serve(app, host="0.0.0.0", port=8080)
 
 
